@@ -13,7 +13,7 @@ services:
     plan: free
 
     # Build phase
-    buildCommand: pip install -r requirements.txt && python -m backend.demo.generate_demo_data
+    buildCommand: pip install -r requirements.txt
 
     # Start the FastAPI server
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT

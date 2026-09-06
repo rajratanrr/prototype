@@ -1,0 +1,14 @@
+# Requirements for running offline ML model training and synthetic data generation
+# Usage: pip install -r requirements-ml.txt
+-r requirements.txt
+pandas==2.2.2
+scikit-learn==1.5.1
+xgboost==2.1.0
+shap==0.45.0
+shapely==2.0.5
+scipy==1.14.0
+Pillow==10.4.0
+matplotlib==3.9.1
+joblib==1.4.2
+reportlab==4.2.2
+noise==1.2.2
