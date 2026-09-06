@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// In production (Netlify), VITE_API_URL should point to your deployed backend.
-// e.g. https://geomines-ai.onrender.com/api
-// In local dev, it falls back to '/api' which is proxied to localhost:8000 by vite.config.js
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
+// Live Render Backend: https://prototype-euj7.onrender.com/api
+// Uses /api in local development (proxied by Vite), and Render in production by default
+const API_BASE = import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV ? '/api' : 'https://prototype-euj7.onrender.com/api')
 
 const client = axios.create({ baseURL: API_BASE })
 
