@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
@@ -10,35 +10,57 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 })
 
+// ── Map tile layer definitions (all 100% free, no API key) ──────────
+const TILE_LAYERS = {
+  satellite: {
+    label: '🛰️ Satellite',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    maxZoom: 19,
+  },
+  dark: {
+    label: '🌑 Dark',
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; <a href="https://carto.com">CARTO</a>',
+    maxZoom: 19,
+  },
+  terrain: {
+    label: '⛰️ Terrain',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+    maxZoom: 18,
+  },
+}
+
 // Custom drill target icon
 const drillIcon = new L.DivIcon({
   className: '',
   html: `<div style="
-    width:24px;height:24px;border-radius:50%;
-    background:linear-gradient(135deg,#e74c3c,#c0392b);
-    border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.5);
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,#ff4757,#c0392b);
+    border:2.5px solid white;box-shadow:0 2px 10px rgba(255,71,87,0.6);
     display:flex;align-items:center;justify-content:center;
-    font-size:12px;color:white;font-weight:bold;
-  ">📍</div>`,
-  iconSize: [24, 24],
-  iconAnchor: [12, 12],
+    font-size:13px;
+  ">🎯</div>`,
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
 })
 
 // Known mine icon
 const mineIcon = new L.DivIcon({
   className: '',
   html: `<div style="
-    width:20px;height:20px;border-radius:50%;
-    background:linear-gradient(135deg,#d4a843,#b8902e);
-    border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4);
+    width:22px;height:22px;border-radius:50%;
+    background:linear-gradient(135deg,#f9ca24,#d4a843);
+    border:2px solid white;box-shadow:0 2px 8px rgba(212,168,67,0.5);
     display:flex;align-items:center;justify-content:center;
-    font-size:10px;
+    font-size:11px;
   ">⛏</div>`,
-  iconSize: [20, 20],
-  iconAnchor: [10, 10],
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
 })
 
-// Component to render heatmap overlay using canvas
+// ── Heatmap canvas overlay ──────────────────────────────────────────
 function HeatmapOverlay({ data, bounds }) {
   const map = useMap()
   const overlayRef = useRef(null)
@@ -46,12 +68,10 @@ function HeatmapOverlay({ data, bounds }) {
   useEffect(() => {
     if (!data || data.length === 0) return
 
-    // Remove previous overlay
     if (overlayRef.current) {
       map.removeLayer(overlayRef.current)
     }
 
-    // Create canvas for heatmap
     const canvas = document.createElement('canvas')
     const rows = data.length
     const cols = data[0].length
@@ -59,7 +79,6 @@ function HeatmapOverlay({ data, bounds }) {
     canvas.height = rows
     const ctx = canvas.getContext('2d')
 
-    // Draw pixels
     const imgData = ctx.createImageData(cols, rows)
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -89,16 +108,14 @@ function HeatmapOverlay({ data, bounds }) {
     }
     ctx.putImageData(imgData, 0, 0)
 
-    // Create image overlay
     const imageBounds = [
       [bounds.min_lat, bounds.min_lon],
-      [bounds.max_lat, bounds.max_lon]
+      [bounds.max_lat, bounds.max_lon],
     ]
     const overlay = L.imageOverlay(canvas.toDataURL(), imageBounds, { opacity: 0.65 })
     overlay.addTo(map)
     overlayRef.current = overlay
 
-    // Fit map to bounds
     map.fitBounds(imageBounds, { padding: [20, 20] })
 
     return () => {
@@ -109,12 +126,61 @@ function HeatmapOverlay({ data, bounds }) {
   return null
 }
 
+// ── Layer Switcher Control ──────────────────────────────────────────
+function LayerSwitcher({ activeLayer, onLayerChange }) {
+  return (
+    <div style={{
+      position: 'absolute',
+      top: 12,
+      right: 12,
+      zIndex: 1000,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6,
+    }}>
+      {Object.entries(TILE_LAYERS).map(([key, layer]) => (
+        <button
+          key={key}
+          onClick={() => onLayerChange(key)}
+          style={{
+            padding: '7px 12px',
+            borderRadius: 8,
+            border: activeLayer === key
+              ? '2px solid #1b9aaa'
+              : '2px solid rgba(255,255,255,0.15)',
+            background: activeLayer === key
+              ? 'rgba(27,154,170,0.85)'
+              : 'rgba(15,15,25,0.80)',
+            color: '#fff',
+            fontSize: 12,
+            fontFamily: 'Inter, sans-serif',
+            fontWeight: activeLayer === key ? 700 : 400,
+            cursor: 'pointer',
+            backdropFilter: 'blur(8px)',
+            boxShadow: activeLayer === key
+              ? '0 0 12px rgba(27,154,170,0.5)'
+              : '0 2px 8px rgba(0,0,0,0.4)',
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {layer.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// ── Main MapView Component ──────────────────────────────────────────
 export default function MapView({ results, mines }) {
   const center = [21.5, 79.5]
   const hasResults = results && results.mpi_heatmap_data
+  const [activeLayer, setActiveLayer] = useState('satellite')
+
+  const currentTile = TILE_LAYERS[activeLayer]
 
   return (
-    <div className="map-container">
+    <div className="map-container" style={{ position: 'relative' }}>
       <MapContainer
         center={center}
         zoom={7}
@@ -122,8 +188,10 @@ export default function MapView({ results, mines }) {
         zoomControl={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://carto.com">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          key={activeLayer}
+          attribution={currentTile.attribution}
+          url={currentTile.url}
+          maxZoom={currentTile.maxZoom}
         />
 
         {/* MPI Heatmap overlay */}
@@ -168,17 +236,20 @@ export default function MapView({ results, mines }) {
           </Marker>
         ))}
 
-        {/* AOI rectangle */}
+        {/* AOI bounding rectangle */}
         {hasResults && (
           <Rectangle
             bounds={[
               [results.grid_bounds.min_lat, results.grid_bounds.min_lon],
-              [results.grid_bounds.max_lat, results.grid_bounds.max_lon]
+              [results.grid_bounds.max_lat, results.grid_bounds.max_lon],
             ]}
             pathOptions={{ color: '#1b9aaa', weight: 2, fillOpacity: 0, dashArray: '5,5' }}
           />
         )}
       </MapContainer>
+
+      {/* Layer switcher (floating on top of map) */}
+      <LayerSwitcher activeLayer={activeLayer} onLayerChange={setActiveLayer} />
     </div>
   )
 }
