@@ -82,5 +82,25 @@ geomines-ai/
 │   │   ├── pages/            # Page views
 │   │   └── api/              # API client
 │   └── package.json
+├── netlify.toml              # Netlify build and redirect configuration
+├── render.yaml               # Render.com backend service configuration
 └── requirements.txt
 ```
+
+---
+
+## ☁️ Cloud Deployment
+
+### 1. Frontend on Netlify
+The frontend is pre-configured with `netlify.toml` and client-side SPA routing (`_redirects`).
+- **Base directory:** `frontend`
+- **Build command:** `npm run build`
+- **Publish directory:** `frontend/dist` (or `dist` via `netlify.toml`)
+- **Environment Variable:** `VITE_API_URL` = `https://<your-render-backend-url>/api`
+
+### 2. Backend on Render.com
+Configured via `render.yaml` as a Web Service:
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+- **Environment Variable:** `DEMO_MODE=true`
+
