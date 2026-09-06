@@ -1,0 +1,12 @@
+[
+  {"name": "Dongri Buzurg Mine", "lat": 21.68, "lon": 80.22, "mineral": "Braunite", "operator": "MOIL", "label": 1},
+  {"name": "Balaghat Mine", "lat": 21.81, "lon": 80.19, "mineral": "Braunite + Pyrolusite", "operator": "MOIL", "label": 1},
+  {"name": "Gumgaon Mine", "lat": 21.14, "lon": 79.06, "mineral": "Pyrolusite", "operator": "MOIL", "label": 1},
+  {"name": "Kandri Mine", "lat": 21.42, "lon": 79.28, "mineral": "Braunite", "operator": "MOIL", "label": 1},
+  {"name": "Munsar Mine", "lat": 21.18, "lon": 79.05, "mineral": "Pyrolusite", "operator": "MOIL", "label": 1},
+  {"name": "Chikla Mine", "lat": 21.53, "lon": 79.38, "mineral": "Braunite", "operator": "MOIL", "label": 1},
+  {"name": "Tirodi Mine", "lat": 21.72, "lon": 79.72, "mineral": "Braunite", "operator": "MOIL", "label": 1},
+  {"name": "Sitapatore Mine", "lat": 21.49, "lon": 79.34, "mineral": "Pyrolusite", "operator": "MOIL", "label": 1},
+  {"name": "Beldongri Mine", "lat": 21.56, "lon": 79.41, "mineral": "Braunite", "operator": "MOIL", "label": 1},
+  {"name": "Bharweli Mine", "lat": 21.80, "lon": 80.18, "mineral": "Braunite", "operator": "MOIL", "label": 1}
+]

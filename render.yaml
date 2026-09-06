@@ -1,0 +1,30 @@
+# render.yaml — Render.com configuration for GeoMines-AI backend
+# Deploy your FastAPI backend for FREE on Render.com
+# 1. Push this project to GitHub
+# 2. Go to https://render.com → New → Web Service
+# 3. Connect your GitHub repo
+# 4. Render will auto-detect this file and configure everything
+
+services:
+  - type: web
+    name: geomines-ai-backend
+    runtime: python
+    region: oregon
+    plan: free
+
+    # Build phase
+    buildCommand: pip install -r requirements.txt && python -m backend.demo.generate_demo_data
+
+    # Start the FastAPI server
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+
+    # Environment variables — set these in the Render dashboard
+    envVars:
+      - key: DEMO_MODE
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.11"
+      # Set FRONTEND_URL to your actual Netlify URL after deploying frontend
+      # e.g. https://geomines-ai.netlify.app
+      - key: FRONTEND_URL
+        value: "https://geomines-ai.netlify.app"

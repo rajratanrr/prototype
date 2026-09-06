@@ -1,0 +1,137 @@
+[
+  {
+    "rank": 1,
+    "latitude": 21.352,
+    "longitude": 79.35,
+    "mpi_score": 0.9974,
+    "confidence_percent": 99,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 33
+  },
+  {
+    "rank": 2,
+    "latitude": 21.649,
+    "longitude": 79.647,
+    "mpi_score": 0.9971,
+    "confidence_percent": 94.8,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 112
+  },
+  {
+    "rank": 3,
+    "latitude": 21.561,
+    "longitude": 79.41,
+    "mpi_score": 0.9969,
+    "confidence_percent": 99,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 135
+  },
+  {
+    "rank": 4,
+    "latitude": 21.572,
+    "longitude": 79.425,
+    "mpi_score": 0.9947,
+    "confidence_percent": 99,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 130
+  },
+  {
+    "rank": 5,
+    "latitude": 21.42,
+    "longitude": 79.35,
+    "mpi_score": 0.9945,
+    "confidence_percent": 99,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 74
+  },
+  {
+    "rank": 6,
+    "latitude": 21.489,
+    "longitude": 79.351,
+    "mpi_score": 0.9924,
+    "confidence_percent": 99,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 65
+  },
+  {
+    "rank": 7,
+    "latitude": 21.529,
+    "longitude": 79.38,
+    "mpi_score": 0.9914,
+    "confidence_percent": 94.3,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 101
+  },
+  {
+    "rank": 8,
+    "latitude": 21.35,
+    "longitude": 79.547,
+    "mpi_score": 0.8649,
+    "confidence_percent": 86.0,
+    "top_shap_factor": "Strong Mn-SWIR spectral anomaly",
+    "recommended_depth_m": 68
+  },
+  {
+    "rank": 9,
+    "latitude": 21.502,
+    "longitude": 79.378,
+    "mpi_score": 0.7246,
+    "confidence_percent": 70.2,
+    "top_shap_factor": "Fault intersection + magnetic high",
+    "recommended_depth_m": 113
+  },
+  {
+    "rank": 10,
+    "latitude": 21.424,
+    "longitude": 79.447,
+    "mpi_score": 0.6677,
+    "confidence_percent": 66.2,
+    "top_shap_factor": "Fault intersection + magnetic high",
+    "recommended_depth_m": 87
+  },
+  {
+    "rank": 11,
+    "latitude": 21.392,
+    "longitude": 79.351,
+    "mpi_score": 0.5723,
+    "confidence_percent": 62.0,
+    "top_shap_factor": "Moderate clay alteration signal",
+    "recommended_depth_m": 32
+  },
+  {
+    "rank": 12,
+    "latitude": 21.447,
+    "longitude": 79.411,
+    "mpi_score": 0.5208,
+    "confidence_percent": 54.8,
+    "top_shap_factor": "Moderate clay alteration signal",
+    "recommended_depth_m": 46
+  },
+  {
+    "rank": 13,
+    "latitude": 21.556,
+    "longitude": 79.425,
+    "mpi_score": 0.3869,
+    "confidence_percent": 35.6,
+    "top_shap_factor": "Moderate clay alteration signal",
+    "recommended_depth_m": 84
+  },
+  {
+    "rank": 14,
+    "latitude": 21.439,
+    "longitude": 79.44,
+    "mpi_score": 0.3528,
+    "confidence_percent": 35.3,
+    "top_shap_factor": "Moderate clay alteration signal",
+    "recommended_depth_m": 128
+  },
+  {
+    "rank": 15,
+    "latitude": 21.573,
+    "longitude": 79.394,
+    "mpi_score": 0.2877,
+    "confidence_percent": 33.6,
+    "top_shap_factor": "Moderate clay alteration signal",
+    "recommended_depth_m": 91
+  }
+]

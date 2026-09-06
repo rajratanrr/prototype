@@ -1,0 +1,20 @@
+{
+  "grid_size": 300,
+  "center_lat": 21.5,
+  "center_lon": 79.5,
+  "pixel_deg": 0.001,
+  "min_lat": 21.35,
+  "max_lat": 21.65,
+  "min_lon": 79.35,
+  "max_lon": 79.65,
+  "feature_names": [
+    "Mn_Index",
+    "Fe_Ratio",
+    "Clay_Index",
+    "Ferrous_Index",
+    "NDVI",
+    "Slope",
+    "Fault_Density",
+    "Magnetic_Anomaly"
+  ]
+}
