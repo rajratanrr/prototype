@@ -25,6 +25,6 @@ services:
       - key: PYTHON_VERSION
         value: "3.11"
       # Set FRONTEND_URL to your actual Netlify URL after deploying frontend
-      # e.g. https://geomines-ai.netlify.app
+      # e.g. https://geominesai.netlify.app
       - key: FRONTEND_URL
-        value: "https://geomines-ai.netlify.app"
+        value: "https://geominesai.netlify.app"

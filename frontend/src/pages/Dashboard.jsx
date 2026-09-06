@@ -77,7 +77,10 @@ export default function Dashboard() {
       setResults(resultsRes.data)
     } catch (err) {
       console.error('Analysis failed:', err)
-      alert('Analysis failed. Make sure the backend is running on port 8000.')
+      const errorMsg = err.response?.data?.detail
+        ? (typeof err.response.data.detail === 'string' ? err.response.data.detail : JSON.stringify(err.response.data.detail))
+        : (err.message || 'Network error')
+      alert(`Analysis failed: ${errorMsg}\n\nCheck that the backend service is running and reachable.`)
     } finally {
       setLoading(false)
     }

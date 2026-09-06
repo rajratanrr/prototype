@@ -21,21 +21,33 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS — allow frontend dev server and production Netlify URL
+# CORS — allow frontend dev server and production Netlify URLs
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         FRONTEND_URL,
+        "https://geominesai.netlify.app",
+        "https://geomines-ai.netlify.app",
         "http://localhost:5173",
         "http://localhost:3000",
         "http://127.0.0.1:5173",
-        # Netlify deploy previews and production URLs
-        "https://*.netlify.app",
+        "*",
     ],
+    allow_origin_regex=r"https://.*\.netlify\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    """Health check / root endpoint for Render health monitoring."""
+    return {
+        "status": "ok",
+        "service": "GeoMines-AI API",
+        "version": "1.0.0",
+        "mode": "DEMO MODE" if DEMO_MODE else "LIVE MODE",
+    }
 
 # Register API routes
 app.include_router(router, prefix="/api")
